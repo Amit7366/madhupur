@@ -1,0 +1,415 @@
+{
+  "meta": {
+    "title": "Pineapples City",
+    "description": "Local services, maps, and notices — fast on any device."
+  },
+  "brand": {
+    "name": "Pineapples City"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "filterCategories": "Filter by category"
+  },
+  "theme": {
+    "menu": "Color theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "nav": {
+    "landmarkLabel": "Main navigation",
+    "home": "Home",
+    "services": "Services",
+    "map": "Map",
+    "notices": "Notices",
+    "contacts": "Contact"
+  },
+  "tags": {
+    "emergency": "Emergency",
+    "health": "Health",
+    "education": "Education"
+  },
+  "footer": {
+    "tagline": "Local services, maps, and updates — optimized for quick access on any device.",
+    "rights": "All rights reserved."
+  },
+  "home": {
+    "heroTitle": "Everything for residents, in one place",
+    "heroSubtitle": "Find services, explore the map, read notices, and get help when it matters.",
+    "searchPlaceholder": "Search services, places, notices…",
+    "ctaPrimary": "Browse services",
+    "quickActionsEyebrow": "Shortcuts",
+    "quickActionsTitle": "Quick actions",
+    "featuredEyebrow": "Highlights",
+    "featuredTitle": "Featured near you",
+    "noticesEyebrow": "Updates",
+    "noticesTitle": "Latest notices",
+    "viewAll": "View all",
+    "emergencyHint": "Life-threatening emergency? Call your local emergency number.",
+    "quickServicesBlurb": "Programs, licenses, and schedules",
+    "quickMapBlurb": "Places, directions, and points of interest",
+    "quickNoticesBlurb": "Official announcements and alerts",
+    "mapSectionEyebrow": "Location",
+    "mapSectionTitle": "Madhupur Upazila",
+    "mapSectionDescriptionEn": "Madhupur is an upazila in Tangail District—known for pineapples, the Madhupur sal forest belt, and busy rural markets. Its administrative centre links towns, villages, and agricultural communities across forest and farmland.",
+    "mapSectionDescriptionBn": "মধুপুর টাংগাইল জেলার একটি উপজেলা—আনারস, মধুপুরের শালবন অঞ্চল ও গ্রামীণ হাট-বাজারের জন্য পরিচিত। প্রশাসনিক কেন্দ্র শহর, গ্রাম ও কৃষি জনগোষ্ঠীকে বন ও কৃষিভূমির মধ্য দিয়ে যুক্ত রাখে।",
+    "mapSectionOpenInMaps": "Open in Google Maps",
+    "mapSectionIframeTitle": "Map of Madhupur Upazila"
+  },
+  "drawer": {
+    "menu": "Menu",
+    "close": "Close menu",
+    "closeBackdrop": "Close menu",
+    "sectionMain": "Main",
+    "sectionExplore": "Explore"
+  },
+  "fab": {
+    "openMap": "Open map"
+  },
+  "contribute": {
+    "fabLabel": "Contribute data",
+    "fabHint": "Suggest a place for the map — opens a short form.",
+    "dialogTitle": "Contribute place data",
+    "dialogIntro": "Fill in what you know. Your place is saved to the map database when the API is configured (see .env). If the server is offline, you can still copy the JSON for reviewers.",
+    "category": "Category",
+    "categoryPlaceholder": "Choose a category",
+    "sectionNames": "Names",
+    "nameBn": "Name (Bangla)",
+    "nameEn": "Name (English)",
+    "sectionAddress": "Address",
+    "addressBn": "Address (Bangla)",
+    "addressEn": "Address (English)",
+    "sectionDetails": "Description & hours",
+    "descriptionBn": "Description (Bangla)",
+    "descriptionEn": "Description (English)",
+    "servicesBn": "Services (Bangla)",
+    "servicesEn": "Services (English)",
+    "hoursBn": "Opening hours (Bangla)",
+    "hoursEn": "Opening hours (English)",
+    "sectionContact": "Phones & image",
+    "hotline": "Hotline (optional)",
+    "dutyPhone": "Duty phone (optional)",
+    "dutyOfficerBn": "Person in charge (Bangla)",
+    "dutyOfficerEn": "Person in charge (English)",
+    "imageUrl": "Image URL (optional)",
+    "sectionLocation": "Map coordinates",
+    "locationHeading": "Location",
+    "locationGps": "GPS location",
+    "locationFromMap": "Pick on map",
+    "locationLatPlaceholder": "Latitude (Lat)",
+    "locationLngPlaceholder": "Longitude (Lng)",
+    "locationMapTitle": "Tap the map",
+    "locationMapHint": "Tap to place the pin, or drag it. Then confirm.",
+    "locationMapConfirm": "Use this point",
+    "locationMapCancel": "Cancel",
+    "locationGeoDenied": "Location permission denied.",
+    "locationGeoError": "Could not read your location.",
+    "locationGeoUnsupported": "Location is not available on this device.",
+    "lat": "Latitude",
+    "lng": "Longitude",
+    "sectionContributor": "Your details (optional)",
+    "contributorName": "Your name",
+    "contributorContact": "Your phone or email",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "validationCategory": "Please choose a category.",
+    "validationName": "Enter at least one name in Bangla or English.",
+    "validationLocation": "Set location with GPS or the map, or type latitude and longitude.",
+    "validationLocationRange": "Latitude must be between −90 and 90, longitude between −180 and 180.",
+    "successTitle": "Thank you",
+    "successBody": "Your place was submitted and will appear on the map after the page refreshes.",
+    "successBodyCopyFallback": "The server could not be reached. Copy the JSON below to share with the team.",
+    "copyFailed": "Copy was blocked. Select and copy the text below manually.",
+    "submitError": "Could not reach the map API. Check that the server is running and NEXT_PUBLIC_API_URL is set.",
+    "done": "Done"
+  },
+  "pages": {
+    "filterAll": "All",
+    "emptyFilterTitle": "Nothing in this category",
+    "emptyFilterDescription": "Try a different filter or check back soon.",
+    "services": {
+      "title": "Services",
+      "description": "Browse municipal services, permits, utilities, and social programs in one place.",
+      "emptyTitle": "No services listed",
+      "emptyDescription": "New service entries will appear here when published.",
+      "categories": {
+        "permits": "Permits & licenses",
+        "utilities": "Utilities",
+        "social": "Social services"
+      }
+    },
+    "offices": {
+      "title": "Offices",
+      "description": "Ward desks, central counters, and field teams — find the right place to visit.",
+      "emptyTitle": "No offices listed",
+      "emptyDescription": "Office locations will be added as they are confirmed.",
+      "categories": {
+        "ward": "Ward offices",
+        "central": "Central",
+        "field": "Field teams"
+      }
+    },
+    "health": {
+      "title": "Health",
+      "description": "Clinics, screening programs, and pharmacy information for residents.",
+      "emptyTitle": "No health entries yet",
+      "emptyDescription": "Health programs and facilities will show up here when available.",
+      "categories": {
+        "clinic": "Clinics",
+        "programs": "Programs",
+        "pharmacy": "Pharmacy"
+      }
+    },
+    "education": {
+      "title": "Education",
+      "description": "School enrollment, training, and early learning resources.",
+      "emptyTitle": "No education entries yet",
+      "emptyDescription": "Updates from schools and training partners will appear here.",
+      "categories": {
+        "schools": "Schools",
+        "training": "Training",
+        "childcare": "Childcare"
+      }
+    },
+    "emergency": {
+      "title": "Emergency",
+      "description": "Hotlines, shelters, and practical tips for urgent situations.",
+      "emptyTitle": "No emergency information",
+      "emptyDescription": "Emergency contacts and guides will be published here.",
+      "categories": {
+        "numbers": "Hotlines",
+        "shelters": "Shelters",
+        "tips": "Guides"
+      }
+    },
+    "tourism": {
+      "title": "Tourism",
+      "description": "Heritage walks, nature spots, and food experiences around town.",
+      "emptyTitle": "No tourism listings",
+      "emptyDescription": "Attractions and events will be listed when ready.",
+      "categories": {
+        "heritage": "Heritage",
+        "nature": "Nature",
+        "food": "Food & markets"
+      }
+    },
+    "map": {
+      "title": "Map",
+      "description": "Find hospitals, police, schools, offices, worship, markets, food, shops, and visitor spots — tap a pin or card to focus.",
+      "nearYou": "Places near you",
+      "mapInfoBoxDetails": "Full details",
+      "mapInfoBoxDirections": "Directions",
+      "mapInfoBoxShare": "Share",
+      "mapInfoBoxCall": "Call",
+      "mapInfoBoxCopyAddress": "Copy address",
+      "tapHint": "Selected",
+      "allTypesInSection": "All types",
+      "filterGroupAria": "Browse by area — health, offices, transport, and more",
+      "filterSubtypeAria": "Pick a place type in this area",
+      "emptyTitle": "No places in this category",
+      "emptyDescription": "Try “All” or pick another type of place.",
+      "mapAttribution": "Illustrative map · Connect tiles or GIS when ready",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "recenter": "Recenter map",
+      "geoLoading": "Finding your location…",
+      "geoDenied": "Location permission was denied.",
+      "geoError": "We could not read your location.",
+      "geoUnsupported": "This browser does not support location.",
+      "geoFallbackNote": "Distances and the map use the town center as a reference.",
+      "unitKm": "km",
+      "unitM": "m",
+      "routeModalClose": "Close",
+      "routeModalOpenDirections": "Open in Google Maps",
+      "routeModalMapPreviewHint": "Place preview below. Tap “Directions & route” to see the driving path here.",
+      "routeModalDirectionsHint": "Driving route from the reference point (your location or town centre). Open Google Maps for live navigation and traffic.",
+      "routeModalBackToPreview": "Back to place preview",
+      "openRoute": "Directions & route",
+      "routeModalLabelDescription": "Description",
+      "routeModalLabelServices": "Services",
+      "routeModalLabelHours": "Opening hours",
+      "routeModalLabelHotline": "Hotline / main number",
+      "routeModalLabelDutyPhone": "Duty / contact number",
+      "routeModalLabelDutyOfficer": "Person in charge",
+      "routeModalLabelBangla": "Bangla",
+      "routeModalLabelEnglish": "English",
+      "callNumber": "Call",
+      "mapSearchPlaceholder": "Search or ask — e.g. nearest hospital, open police station…",
+      "mapSearchInputAria": "Smart map search",
+      "mapSearchSubmitAria": "Search",
+      "mapSearchClearAria": "Clear search text",
+      "mapSearchVoiceAria": "Voice search",
+      "mapSearchVoiceStopAria": "Stop voice input",
+      "mapSearchVoiceUnsupported": "Voice search is not available in this browser.",
+      "mapSearchVoiceListening": "Listening… speak now.",
+      "mapSearchDismiss": "Dismiss suggestions",
+      "filterGroups": {
+        "all": "All places",
+        "health": "Health",
+        "safety_legal": "Safety & legal",
+        "government": "Government",
+        "education": "Education",
+        "religion": "Religion",
+        "food": "Food & drink",
+        "retail": "Shops & markets",
+        "tourism": "Tourism & stay",
+        "transport": "Transport",
+        "finance": "Banking & money",
+        "utilities": "Utilities & services",
+        "work": "Work & training",
+        "community": "Community",
+        "agriculture": "Agriculture",
+        "other": "Other"
+      },
+      "filters": {
+        "all": "All",
+        "hospital": "Hospitals",
+        "clinic": "Clinics",
+        "pharmacy": "Pharmacies",
+        "diagnostic_center": "Diagnostic centers",
+        "ambulance": "Ambulance",
+        "blood_bank": "Blood banks",
+        "veterinary": "Veterinary",
+        "police": "Police",
+        "fire_service": "Fire service",
+        "disaster_shelter": "Disaster shelters",
+        "legal_aid": "Legal aid",
+        "union_office": "Union office",
+        "upazila_office": "Upazila office",
+        "land_office": "Land office",
+        "passport_office": "Passport office",
+        "post_office": "Post office",
+        "election_office": "Election office",
+        "social_service_office": "Social service office",
+        "school": "Schools",
+        "college": "Colleges",
+        "university": "Universities",
+        "madrasa": "Madrasa",
+        "coaching_center": "Coaching centers",
+        "library": "Libraries",
+        "mosque": "Mosques",
+        "temple": "Temples",
+        "church": "Churches",
+        "pagoda": "Pagodas",
+        "restaurant": "Restaurants",
+        "hotel_food": "Hotels (food)",
+        "fast_food": "Fast food",
+        "cafe": "Cafés",
+        "bakery": "Bakeries",
+        "super_shop": "Super shops",
+        "grocery_store": "Grocery stores",
+        "bazaar": "Bazaars / markets",
+        "shopping_mall": "Shopping malls",
+        "clothing_store": "Clothing stores",
+        "electronics_store": "Electronics stores",
+        "tourist_spot": "Tourist spots",
+        "park": "Parks",
+        "resort": "Resorts",
+        "guest_house": "Guest houses",
+        "historical_place": "Historical places",
+        "bus_stand": "Bus stands",
+        "train_station": "Train stations",
+        "ferry_terminal": "Ferry / launch",
+        "cng_stand": "CNG stands",
+        "car_rental": "Car rental",
+        "bank": "Banks",
+        "atm": "ATMs",
+        "mobile_banking_agent": "Mobile banking agent",
+        "microfinance": "Microfinance",
+        "electric_office": "Electric office",
+        "water_office": "Water office",
+        "internet_provider": "Internet provider",
+        "repair_service": "Repair services",
+        "printing_service": "Printing / press",
+        "company": "Companies",
+        "factory": "Factories",
+        "job_center": "Job centers",
+        "training_institute": "Training institutes",
+        "community_center": "Community centers",
+        "ngo": "NGOs",
+        "club": "Clubs",
+        "event_venue": "Event venues",
+        "agriculture_office": "Agriculture office",
+        "fertilizer_shop": "Fertilizer shops",
+        "seed_store": "Seed stores",
+        "fishery_office": "Fishery office",
+        "livestock_office": "Livestock office",
+        "fuel_station": "Fuel stations",
+        "public_toilet": "Public toilets",
+        "parking": "Parking",
+        "graveyard": "Graveyards",
+        "crematorium": "Crematorium"
+      }
+    },
+    "notices": {
+      "title": "Notices",
+      "description": "Official notices from the municipality — infrastructure, events, and council updates.",
+      "emptyTitle": "No notices",
+      "emptyDescription": "There are no active notices right now.",
+      "categories": {
+        "infrastructure": "Infrastructure",
+        "events": "Events",
+        "council": "Council"
+      }
+    },
+    "news": {
+      "title": "News",
+      "description": "Local headlines and stories from the municipality and partners.",
+      "emptyTitle": "No news yet",
+      "emptyDescription": "Stories will appear here when editors publish new articles.",
+      "categories": {
+        "local": "Local",
+        "region": "Region"
+      }
+    },
+    "gallery": {
+      "title": "Gallery",
+      "description": "Photos and highlights from events, landmarks, and community life.",
+      "emptyTitle": "Gallery empty",
+      "emptyDescription": "New albums and media will be added soon.",
+      "categories": {
+        "landmarks": "Landmarks",
+        "events": "Events",
+        "culture": "Culture"
+      }
+    },
+    "contacts": {
+      "title": "Contacts",
+      "description": "Reach the right team — administration, technical support, and visiting hours.",
+      "emptyTitle": "No contacts",
+      "emptyDescription": "Contact channels will be listed when they go live.",
+      "categories": {
+        "admin": "Administration",
+        "technical": "Technical",
+        "public": "Visit us"
+      }
+    },
+    "about": {
+      "title": "About",
+      "description": "Mission, values, and how we keep residents informed.",
+      "emptyTitle": "No content",
+      "emptyDescription": "This section is being prepared."
+    }
+  },
+  "pwa": {
+    "offline": {
+      "message": "You’re offline — reconnect to load new content."
+    },
+    "install": {
+      "title": "Install this app",
+      "body": "Add to your home screen for quick access and a full-screen experience.",
+      "action": "Install",
+      "later": "Not now",
+      "close": "Dismiss install prompt"
+    }
+  },
+  "language": {
+    "label": "Language",
+    "enShort": "EN",
+    "bnShort": "বাংলা",
+    "switchToEn": "English",
+    "switchToBn": "বাংলা"
+  }
+}

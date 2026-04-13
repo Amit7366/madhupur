@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+/* Class-based dark mode (next-themes sets `class="dark"` on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Institutional palette: high contrast, restrained accent (indigo). */
+:root {
+  color-scheme: light;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --border-subtle: rgb(15 23 42 / 0.08);
+  --surface: #ffffff;
+  --accent: #3730a3;
+  --accent-foreground: #312e81;
+  --ring-focus: rgb(55 48 163 / 0.42);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #0c0d12;
+  --foreground: #f1f5f9;
+  --muted: #94a3b8;
+  --border-subtle: rgb(248 250 252 / 0.09);
+  --surface: #12141a;
+  --accent: #a5b4fc;
+  --accent-foreground: #c7d2fe;
+  --ring-focus: rgb(165 180 252 / 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans), var(--font-noto-bengali), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), var(--font-noto-bengali), system-ui,
+      sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[lang="bn"] body {
+    font-family: var(--font-noto-bengali), var(--font-geist-sans), system-ui,
+      sans-serif;
+    line-height: 1.65;
+    word-spacing: 0.02em;
+  }
+
+  html[lang="bn"] :where(h1, h2, h3) {
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+  }
+
+  html[lang="bn"] :where(p, li) {
+    line-height: 1.7;
+  }
+
+  :lang(bn).nav-tab-label {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 640px) {
+    :lang(bn).nav-tab-label {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,14 @@
+/* Leaflet DivIcon defaults add a white box; pins bring their own visuals. */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-container .contribute-map-pick-pin {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
