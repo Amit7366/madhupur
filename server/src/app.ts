@@ -1,10 +1,17 @@
 import cors from "cors";
-import express from "express";
-import helmet from "helmet";
+import express, { type RequestHandler } from "express";
+import type { HelmetOptions } from "helmet";
 import morgan from "morgan";
+import { createRequire } from "node:module";
 import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { apiRouter } from "./routes/index.js";
+
+/** Helmet’s ESM typings resolve to a non-callable module type under NodeNext on Vercel; CJS export is the real middleware factory. */
+const require = createRequire(import.meta.url);
+const helmet = require("helmet") as (
+  options?: Readonly<HelmetOptions>,
+) => RequestHandler;
 
 export function createApp() {
   const app = express();
