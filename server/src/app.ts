@@ -7,7 +7,7 @@ import { env } from "./config/env.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { apiRouter } from "./routes/index.js";
 
-/** Helmet’s ESM typings resolve to a non-callable module type under NodeNext on Vercel; CJS export is the real middleware factory. */
+/** Helmet’s ESM typings resolve to a non-callable module type under NodeNext; CJS export is the real middleware factory. */
 const require = createRequire(import.meta.url);
 const helmet = require("helmet") as (
   options?: Readonly<HelmetOptions>,

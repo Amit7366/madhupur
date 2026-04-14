@@ -22,6 +22,8 @@ type ContributeMapPickModalProps = {
   initialLng?: number;
   strings: ContributeMapPickStrings;
   onConfirm: (lat: number, lng: number) => void;
+  /** Use a high z-index when this picker opens on top of another modal (e.g. complaints form). */
+  stackClassName?: string;
 };
 
 export function ContributeMapPickModal({
@@ -31,6 +33,7 @@ export function ContributeMapPickModal({
   initialLng,
   strings,
   onConfirm,
+  stackClassName = "z-[70]",
 }: ContributeMapPickModalProps) {
   const id = useId();
   const titleId = `${id}-title`;
@@ -144,7 +147,10 @@ export function ContributeMapPickModal({
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-end justify-center sm:items-center sm:p-4"
+      className={cn(
+        "fixed inset-0 flex items-end justify-center sm:items-center sm:p-4",
+        stackClassName,
+      )}
       role="presentation"
     >
       <button

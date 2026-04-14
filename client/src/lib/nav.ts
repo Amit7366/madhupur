@@ -1,10 +1,22 @@
 import type { LucideIcon } from "lucide-react";
-import { Bell, Briefcase, Home, Mail, Map } from "lucide-react";
+import { Bell, Briefcase, Home, Mail, Map, Megaphone } from "lucide-react";
 import type { Locale } from "@/lib/i18n";
 
-export type NavKey = "home" | "services" | "map" | "notices" | "contacts";
+export type NavKey =
+  | "home"
+  | "services"
+  | "map"
+  | "complaints"
+  | "notices"
+  | "contacts";
 
-export type NavSegment = "" | "services" | "map" | "notices" | "contacts";
+export type NavSegment =
+  | ""
+  | "services"
+  | "map"
+  | "complaints"
+  | "notices"
+  | "contacts";
 
 export type NavDef = {
   segment: NavSegment;
@@ -18,6 +30,7 @@ export const NAV_DEF: readonly NavDef[] = [
   { segment: "", navKey: "home", icon: Home },
   { segment: "services", navKey: "services", icon: Briefcase },
   { segment: "map", navKey: "map", icon: Map, featured: true },
+  { segment: "complaints", navKey: "complaints", icon: Megaphone },
   { segment: "notices", navKey: "notices", icon: Bell },
   { segment: "contacts", navKey: "contacts", icon: Mail },
 ] as const;
