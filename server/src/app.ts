@@ -20,7 +20,7 @@ export function createApp() {
   app.use(
     cors({
       origin: env.clientOrigins,
-      methods: ["GET", "POST", "OPTIONS"],
+      methods: ["GET", "POST", "PATCH", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Accept"],
     }),
   );

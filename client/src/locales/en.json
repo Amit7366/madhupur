@@ -21,6 +21,7 @@
     "home": "Home",
     "services": "Services",
     "map": "Map",
+    "bloodBank": "Blood bank",
     "complaints": "Complaints",
     "notices": "Notices",
     "contacts": "Contact"
@@ -210,6 +211,33 @@
         "shelters": "Shelters",
         "tips": "Guides"
       }
+    },
+    "bloodBank": {
+      "title": "Live blood bank",
+      "description": "Search voluntary donors by blood group and area. Status reflects availability and the standard whole-blood cooling window.",
+      "liveRegistry": "Donor registry",
+      "emergencyCta": "Emergency request",
+      "filterBlood": "Blood group",
+      "filterUnion": "Union / area",
+      "resultsCount": "{{count}} donor(s) match your filters",
+      "emptyTitle": "No donors match these filters",
+      "emptyDescription": "Try “All” for blood group or area, or widen your search.",
+      "badgeLive": "Live",
+      "badgeCooling": "Cooling",
+      "coolingHint": "~{{days}} days left in 120-day period",
+      "disclaimer": "Demo data for interface testing only. Verify every donation through licensed facilities and official channels.",
+      "modalTitle": "Emergency blood request",
+      "modalSubtitle": "Share details so coordinators can respond quickly.",
+      "modalClose": "Close",
+      "fieldPatient": "Patient name",
+      "fieldHospital": "Hospital / facility",
+      "fieldUnits": "Units needed",
+      "fieldContact": "Contact number",
+      "fieldDeadline": "Needed by (date & time)",
+      "formSubmit": "Submit request",
+      "formCancel": "Cancel",
+      "formErrorRequired": "Please fill in every field.",
+      "formSuccess": "Your request details are recorded for this session. Connect to your hospital network or API to broadcast alerts."
     },
     "tourism": {
       "title": "Tourism",

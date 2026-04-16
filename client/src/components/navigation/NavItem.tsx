@@ -42,7 +42,7 @@ export function NavItem({
         href={href}
         prefetch
         className={cn(
-          "group relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-2.5 transition-all duration-200 ease-out",
+          "group relative flex min-w-[4.5rem] max-w-[6.25rem] shrink-0 snap-center flex-col items-center justify-center gap-0.5 rounded-2xl px-1.5 py-2.5 transition-all duration-200 ease-out sm:min-w-[4.75rem]",
           "[-webkit-tap-highlight-color:transparent] touch-manipulation active:scale-[0.96]",
           focusRing,
           featured &&
