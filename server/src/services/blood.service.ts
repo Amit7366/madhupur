@@ -1,5 +1,5 @@
 import mongoose, { type FilterQuery } from "mongoose";
-import type { BloodRequestDoc } from "../models/blood-request.model.js";
+import type { BloodRequestDoc, BloodRequestStatus } from "../models/blood-request.model.js";
 import { BloodRequest } from "../models/blood-request.model.js";
 import { Donor, type DonorDoc } from "../models/donor.model.js";
 import { User } from "../models/user.model.js";
@@ -113,26 +113,56 @@ export async function listEligibleDonors(
   return rows;
 }
 
+function normalizeContactPhone(phone: string): string {
+  return phone.replace(/\s+/g, "").trim();
+}
+
+/**
+ * Links emergency requests to a User by phone (upsert). Display name uses patientName as a stand-in
+ * when no separate requester name is collected.
+ */
+export async function findOrCreateRequesterUserId(
+  contactPhone: string,
+  displayName: string,
+): Promise<mongoose.Types.ObjectId> {
+  const phone = normalizeContactPhone(contactPhone);
+  const name = displayName.trim().slice(0, 120);
+  const doc = await User.findOneAndUpdate(
+    { phone },
+    { $set: { phone, name } },
+    { upsert: true, new: true, runValidators: true },
+  ).exec();
+  if (!doc) {
+    throw new BloodServiceError("USER_UPSERT_FAILED", 500);
+  }
+  return new mongoose.Types.ObjectId(readDocumentId(doc as unknown as mongoose.Document));
+}
+
 export type CreateBloodRequestInput = Readonly<{
-  requesterId: string;
-  bloodGroup: string;
+  patientName: string;
   hospitalName: string;
+  bloodGroup: string;
+  unitsNeeded: string;
+  contactPhone: string;
+  neededBy: Date;
   urgency: BloodRequestDoc["urgency"];
 }>;
 
 export async function createBloodRequest(
   input: CreateBloodRequestInput,
 ): Promise<BloodRequestDoc> {
-  const requesterOid = new mongoose.Types.ObjectId(input.requesterId);
-  const userExists = await User.exists({ _id: requesterOid });
-  if (!userExists) {
-    throw new BloodServiceError("REQUESTER_NOT_FOUND", 404);
-  }
+  const requesterId = await findOrCreateRequesterUserId(
+    input.contactPhone,
+    input.patientName,
+  );
 
   const created = await BloodRequest.create({
-    requesterId: requesterOid,
+    requesterId,
+    patientName: input.patientName.trim(),
     bloodGroup: input.bloodGroup,
-    hospitalName: input.hospitalName,
+    hospitalName: input.hospitalName.trim(),
+    unitsNeeded: input.unitsNeeded.trim(),
+    neededBy: input.neededBy,
     urgency: input.urgency,
     status: "Open",
   });
@@ -150,6 +180,98 @@ export async function createBloodRequest(
   );
 
   return created;
+}
+
+export type BloodRequestPublicRow = Readonly<{
+  id: string;
+  patientName: string;
+  bloodGroup: string;
+  hospitalName: string;
+  unitsNeeded: string;
+  neededBy: string;
+  urgency: string;
+  status: string;
+  createdAt: string;
+  requester: Readonly<{
+    name: string;
+    phone?: string;
+  }>;
+}>;
+
+function toPublicBloodRequest(
+  raw: BloodRequestDoc & {
+    _id: mongoose.Types.ObjectId;
+    requesterId?: unknown;
+    patientName?: string;
+    unitsNeeded?: string;
+    neededBy?: Date;
+  },
+): BloodRequestPublicRow {
+  const r = raw.requesterId as
+    | { _id: mongoose.Types.ObjectId; name?: string; phone?: string }
+    | null
+    | undefined;
+  const neededRaw = raw.neededBy;
+  const neededBy =
+    neededRaw instanceof Date
+      ? neededRaw.toISOString()
+      : neededRaw != null
+        ? String(neededRaw)
+        : new Date(0).toISOString();
+  const createdAt =
+    raw.createdAt instanceof Date
+      ? raw.createdAt.toISOString()
+      : String(raw.createdAt ?? new Date().toISOString());
+  return {
+    id: String(raw._id),
+    patientName: raw.patientName ?? "—",
+    bloodGroup: raw.bloodGroup,
+    hospitalName: raw.hospitalName,
+    unitsNeeded: raw.unitsNeeded ?? "—",
+    neededBy,
+    urgency: raw.urgency,
+    status: raw.status,
+    createdAt,
+    requester: {
+      name: r?.name ?? "",
+      ...(r?.phone ? { phone: r.phone } : {}),
+    },
+  };
+}
+
+export async function listBloodRequests(options: {
+  status?: BloodRequestStatus;
+  limit?: number;
+}): Promise<BloodRequestPublicRow[]> {
+  const limit = Math.min(Math.max(options.limit ?? 80, 1), 200);
+  const q: FilterQuery<BloodRequestDoc> = {};
+  if (options.status) {
+    q.status = options.status;
+  }
+
+  const docs = await BloodRequest.find(q)
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .populate({
+      path: "requesterId",
+      model: User,
+      select: "name phone",
+    })
+    .lean()
+    .exec();
+
+  const out: BloodRequestPublicRow[] = [];
+  for (const d of docs) {
+    out.push(
+      toPublicBloodRequest(
+        d as BloodRequestDoc & {
+          _id: mongoose.Types.ObjectId;
+          requesterId?: unknown;
+        },
+      ),
+    );
+  }
+  return out;
 }
 
 export type PatchDonorStatusInput = Readonly<{

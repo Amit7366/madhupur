@@ -6,6 +6,19 @@ import {
 } from "../models/place.model.js";
 import type { CreatePlaceBody } from "../validation/place.validation.js";
 
+/** Categories surfaced on the tourism explorer (approved places only). */
+export const TOURISM_PLACE_CATEGORIES: readonly PlaceCategory[] = [
+  "tourist_spot",
+  "park",
+  "resort",
+  "guest_house",
+  "historical_place",
+  "restaurant",
+  "hotel_food",
+  "cafe",
+  "fast_food",
+] as const;
+
 export type PlacePublicDto = {
   id: string;
   /** Present when row was seeded from frontend baseline (`MAP_PLACES`). */
@@ -17,6 +30,7 @@ export type PlacePublicDto = {
   services: { bn: string; en: string };
   hours: { bn: string; en: string };
   image: string;
+  galleryImages: string[];
   hotline?: string;
   dutyPhone?: string;
   dutyOfficer: { bn: string; en: string };
@@ -42,6 +56,9 @@ function toDto(doc: PlaceDocument): PlacePublicDto {
     services: doc.services,
     hours: doc.hours,
     image: doc.image ?? "",
+    galleryImages: Array.isArray(doc.galleryImages)
+      ? doc.galleryImages.filter((u): u is string => typeof u === "string" && u.length > 0)
+      : [],
     hotline: doc.hotline ?? undefined,
     dutyPhone: doc.dutyPhone ?? undefined,
     dutyOfficer: doc.dutyOfficer,
@@ -57,11 +74,16 @@ function toDto(doc: PlaceDocument): PlacePublicDto {
 
 export async function listPublishedPlaces(params?: {
   category?: PlaceCategory;
+  tourism?: boolean;
 }): Promise<PlacePublicDto[]> {
   const q: FilterQuery<PlaceDocument> = {
     moderationStatus: "approved",
   };
-  if (params?.category) q.category = params.category;
+  if (params?.tourism) {
+    q.category = { $in: [...TOURISM_PLACE_CATEGORIES] };
+  } else if (params?.category) {
+    q.category = params.category;
+  }
   const docs = await Place.find(q).sort({ updatedAt: -1 }).exec();
   return docs.map((d) => toDto(d));
 }
@@ -77,6 +99,7 @@ export async function createPlaceFromCommunity(
     services: body.services,
     hours: body.hours,
     image: body.image?.trim() || "",
+    galleryImages: body.galleryImages ?? [],
     hotline: body.hotline?.trim() || undefined,
     dutyPhone: body.dutyPhone?.trim() || undefined,
     dutyOfficer: body.dutyOfficer,

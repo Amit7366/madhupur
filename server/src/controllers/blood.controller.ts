@@ -4,12 +4,14 @@ import { readDocumentId } from "../lib/mongoose-id.js";
 import {
   BloodServiceError,
   createBloodRequest,
+  listBloodRequests,
   listEligibleDonors,
   updateDonorLastDonation,
 } from "../services/blood.service.js";
 import {
   createBloodRequestSchema,
   listBloodDonorsQuerySchema,
+  listBloodRequestsQuerySchema,
   patchDonorStatusSchema,
 } from "../validation/blood.validation.js";
 
@@ -32,6 +34,24 @@ export async function getBloodDonors(req: Request, res: Response): Promise<void>
   res.json({ success: true, data });
 }
 
+export async function getBloodRequests(req: Request, res: Response): Promise<void> {
+  const parsed = listBloodRequestsQuerySchema.safeParse(req.query);
+  if (!parsed.success) {
+    res.status(400).json({
+      success: false,
+      error: "Validation failed",
+      details: parsed.error.flatten(),
+    });
+    return;
+  }
+
+  const data = await listBloodRequests({
+    status: parsed.data.status,
+    limit: parsed.data.limit,
+  });
+  res.json({ success: true, data });
+}
+
 export async function postBloodRequest(req: Request, res: Response): Promise<void> {
   const parsed = createBloodRequestSchema.safeParse(req.body);
   if (!parsed.success) {
@@ -45,9 +65,12 @@ export async function postBloodRequest(req: Request, res: Response): Promise<voi
 
   try {
     const created = await createBloodRequest({
-      requesterId: parsed.data.requesterId,
-      bloodGroup: parsed.data.bloodGroup,
+      patientName: parsed.data.patientName,
       hospitalName: parsed.data.hospitalName,
+      bloodGroup: parsed.data.bloodGroup,
+      unitsNeeded: parsed.data.unitsNeeded,
+      contactPhone: parsed.data.contactPhone,
+      neededBy: parsed.data.neededBy,
       urgency: parsed.data.urgency,
     });
     res.status(201).json({
@@ -55,8 +78,14 @@ export async function postBloodRequest(req: Request, res: Response): Promise<voi
       data: {
         id: readDocumentId(created as unknown as mongoose.Document),
         requesterId: String(created.requesterId),
+        patientName: created.patientName,
         bloodGroup: created.bloodGroup,
         hospitalName: created.hospitalName,
+        unitsNeeded: created.unitsNeeded,
+        neededBy:
+          created.neededBy instanceof Date
+            ? created.neededBy.toISOString()
+            : String(created.neededBy),
         urgency: created.urgency,
         status: created.status,
         createdAt: created.createdAt,

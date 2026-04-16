@@ -4,8 +4,14 @@ import {
   BLOOD_GROUP_VALUES,
   type BloodGroupValue,
 } from "../models/donor.model.js";
-import type { BloodUrgency } from "../models/blood-request.model.js";
-import { BLOOD_URGENCY_VALUES } from "../models/blood-request.model.js";
+import type {
+  BloodRequestStatus,
+  BloodUrgency,
+} from "../models/blood-request.model.js";
+import {
+  BLOOD_REQUEST_STATUS_VALUES,
+  BLOOD_URGENCY_VALUES,
+} from "../models/blood-request.model.js";
 
 const bloodGroupSchema = z.string().refine(
   (v): v is BloodGroupValue =>
@@ -33,13 +39,28 @@ const urgencySchema = z
     { message: "Invalid urgency" },
   )
   .optional()
-  .default("Low");
+  .default("Emergency");
 
 export const createBloodRequestSchema = z.object({
-  requesterId: objectIdString,
-  bloodGroup: bloodGroupSchema,
+  patientName: z.string().trim().min(1).max(120),
   hospitalName: z.string().trim().min(1).max(200),
+  bloodGroup: bloodGroupSchema,
+  unitsNeeded: z.string().trim().min(1).max(32),
+  contactPhone: z.string().trim().min(5).max(40),
+  neededBy: z.coerce.date(),
   urgency: urgencySchema,
+});
+
+export const listBloodRequestsQuerySchema = z.object({
+  status: z
+    .string()
+    .refine(
+      (s): s is BloodRequestStatus =>
+        (BLOOD_REQUEST_STATUS_VALUES as readonly string[]).includes(s),
+      { message: "Invalid status" },
+    )
+    .optional(),
+  limit: z.coerce.number().int().min(1).max(200).optional(),
 });
 
 export const patchDonorStatusSchema = z.object({
@@ -48,5 +69,6 @@ export const patchDonorStatusSchema = z.object({
 });
 
 export type ListBloodDonorsQuery = z.infer<typeof listBloodDonorsQuerySchema>;
+export type ListBloodRequestsQuery = z.infer<typeof listBloodRequestsQuerySchema>;
 export type CreateBloodRequestBody = z.infer<typeof createBloodRequestSchema>;
 export type PatchDonorStatusBody = z.infer<typeof patchDonorStatusSchema>;

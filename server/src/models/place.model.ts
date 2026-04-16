@@ -111,6 +111,15 @@ const placeSchema = new Schema(
     services: { type: bilingualSchema, required: true },
     hours: { type: bilingualSchema, required: true },
     image: { type: String, default: "" },
+    /** Extra photos for tourism / gallery UIs (URLs). */
+    galleryImages: {
+      type: [String],
+      default: () => [],
+      validate: {
+        validator: (v: unknown[]) => v.length <= 24,
+        message: "At most 24 gallery images",
+      },
+    },
     hotline: { type: String },
     dutyPhone: { type: String },
     dutyOfficer: { type: bilingualSchema, required: true },
@@ -157,7 +166,7 @@ const placeSchema = new Schema(
 placeSchema.index({ location: "2dsphere" });
 placeSchema.index({ searchText: "text" });
 
-function buildSearchText(doc: {
+export function buildSearchText(doc: {
   name: { bn: string; en: string };
   address: { bn: string; en: string };
   description: { bn: string; en: string };

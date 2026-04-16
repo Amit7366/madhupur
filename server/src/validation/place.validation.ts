@@ -26,6 +26,7 @@ export const createPlaceBodySchema = z
       (v) => (v === "" || v == null ? undefined : v),
       z.string().max(2000).optional(),
     ),
+    galleryImages: z.array(z.string().max(2000)).max(24).optional(),
     hotline: z.string().max(80).optional(),
     dutyPhone: z.string().max(80).optional(),
     dutyOfficer: bilingual,

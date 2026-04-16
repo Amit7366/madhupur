@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, X } from "lucide-react";
+import { BLOOD_GROUPS } from "@/lib/dummy/blood-donors";
+import { submitBloodRequest } from "@/lib/blood-api";
 import { focusRing } from "@/lib/ui";
 import { useI18n } from "@/lib/use-i18n";
 import { cn } from "@/lib/utils";
@@ -16,14 +18,18 @@ const inputClass = cn(
 const labelClass =
   "mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-400";
 
+const URGENCY_VALUES = ["Emergency", "High", "Low"] as const;
+
 type EmergencyRequestModalProps = {
   open: boolean;
   onClose: () => void;
+  onSubmitted?: () => void;
 };
 
 export function EmergencyRequestModal({
   open,
   onClose,
+  onSubmitted,
 }: EmergencyRequestModalProps) {
   const { t } = useI18n();
   const dialogId = useId();
@@ -35,8 +41,11 @@ export function EmergencyRequestModal({
   const [units, setUnits] = useState("");
   const [contact, setContact] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [bloodGroup, setBloodGroup] = useState<string>("O+");
+  const [urgency, setUrgency] = useState<string>("Emergency");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const reset = useCallback(() => {
     setPatientName("");
@@ -44,8 +53,11 @@ export function EmergencyRequestModal({
     setUnits("");
     setContact("");
     setDeadline("");
+    setBloodGroup("O+");
+    setUrgency("Emergency");
     setError(null);
     setSuccess(false);
+    setSubmitting(false);
   }, []);
 
   const close = useCallback(() => {
@@ -67,7 +79,7 @@ export function EmergencyRequestModal({
     };
   }, [open, close]);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     if (
@@ -80,7 +92,30 @@ export function EmergencyRequestModal({
       setError(t("pages.bloodBank.formErrorRequired"));
       return;
     }
+    const needed = new Date(deadline);
+    if (Number.isNaN(needed.getTime())) {
+      setError(t("pages.bloodBank.formErrorDeadline"));
+      return;
+    }
+
+    setSubmitting(true);
+    const result = await submitBloodRequest({
+      patientName: patientName.trim(),
+      hospitalName: hospital.trim(),
+      bloodGroup,
+      unitsNeeded: units.trim(),
+      contactPhone: contact.trim(),
+      neededBy: needed.toISOString(),
+      urgency,
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setError(result.message);
+      return;
+    }
     setSuccess(true);
+    onSubmitted?.();
   };
 
   if (!open) return null;
@@ -150,7 +185,53 @@ export function EmergencyRequestModal({
               </button>
             </div>
           ) : (
-            <form onSubmit={submit} className="space-y-4">
+            <form onSubmit={(e) => void submit(e)} className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="sm:col-span-1">
+                  <label htmlFor={`${dialogId}-blood`} className={labelClass}>
+                    {t("pages.bloodBank.fieldBloodGroup")}
+                  </label>
+                  <div className="relative">
+                    <select
+                      id={`${dialogId}-blood`}
+                      className={cn(inputClass, "pr-10")}
+                      value={bloodGroup}
+                      onChange={(e) => setBloodGroup(e.target.value)}
+                    >
+                      {BLOOD_GROUPS.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+                      ▾
+                    </span>
+                  </div>
+                </div>
+                <div className="sm:col-span-1">
+                  <label htmlFor={`${dialogId}-urgency`} className={labelClass}>
+                    {t("pages.bloodBank.fieldUrgency")}
+                  </label>
+                  <div className="relative">
+                    <select
+                      id={`${dialogId}-urgency`}
+                      className={cn(inputClass, "pr-10")}
+                      value={urgency}
+                      onChange={(e) => setUrgency(e.target.value)}
+                    >
+                      {URGENCY_VALUES.map((u) => (
+                        <option key={u} value={u}>
+                          {u}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+                      ▾
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div>
                 <label htmlFor={`${dialogId}-patient`} className={labelClass}>
                   {t("pages.bloodBank.fieldPatient")}
@@ -213,29 +294,31 @@ export function EmergencyRequestModal({
                 />
               </div>
               {error ? (
-                <p className="text-sm text-rose-700 dark:text-rose-400">
-                  {error}
-                </p>
+                <p className="text-sm text-rose-700 dark:text-rose-400">{error}</p>
               ) : null}
               <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={close}
+                  disabled={submitting}
                   className={cn(
                     "order-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 sm:order-1 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800",
                     focusRing,
+                    submitting && "pointer-events-none opacity-50",
                   )}
                 >
                   {t("pages.bloodBank.formCancel")}
                 </button>
                 <button
                   type="submit"
+                  disabled={submitting}
                   className={cn(
                     "order-1 rounded-xl bg-rose-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-900 sm:order-2",
                     focusRing,
+                    submitting && "pointer-events-none opacity-70",
                   )}
                 >
-                  {t("pages.bloodBank.formSubmit")}
+                  {submitting ? t("pages.bloodBank.submitting") : t("pages.bloodBank.formSubmit")}
                 </button>
               </div>
             </form>

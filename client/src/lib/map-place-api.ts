@@ -18,6 +18,8 @@ export type ApiPlaceDto = {
   dutyOfficer: { bn: string; en: string };
   lat: number;
   lng: number;
+  galleryImages?: string[];
+  tags?: string[];
 };
 
 export type CreatePlacePayload = {

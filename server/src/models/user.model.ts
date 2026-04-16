@@ -17,6 +17,8 @@ const userSchema = new Schema(
 );
 
 userSchema.index({ email: 1 }, { unique: true, sparse: true });
+/** One account per phone for blood-bank requester upserts. */
+userSchema.index({ phone: 1 }, { unique: true, sparse: true });
 
 export type UserDoc = InferSchemaType<typeof userSchema>;
 export type UserModel = Model<UserDoc>;

@@ -17,6 +17,8 @@ const bloodRequestSchema = new Schema(
       ref: "User",
       required: true,
     },
+    /** Patient needing blood (may differ from requester name). */
+    patientName: { type: String, required: true, trim: true, maxlength: 120 },
     bloodGroup: {
       type: String,
       required: true,
@@ -32,6 +34,8 @@ const bloodRequestSchema = new Schema(
       ],
     },
     hospitalName: { type: String, required: true, trim: true, maxlength: 200 },
+    unitsNeeded: { type: String, required: true, trim: true, maxlength: 32 },
+    neededBy: { type: Date, required: true },
     urgency: {
       type: String,
       required: true,
