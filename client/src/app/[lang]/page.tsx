@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FileText } from "lucide-react";
+import { HomeWeatherCard } from "@/components/home/HomeWeatherCard";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { UpazilaMapSection } from "@/components/sections/UpazilaMapSection";
 import { InfoCard } from "@/components/ui/InfoCard";
@@ -66,6 +67,8 @@ export default async function HomePage({ params }: LangPageProps) {
         ctaLabel={t("home.ctaPrimary")}
         ctaHref={navHref(locale, "services")}
       />
+
+      <HomeWeatherCard />
 
       <section className="space-y-5" aria-labelledby="quick-actions-heading">
         <SectionTitle

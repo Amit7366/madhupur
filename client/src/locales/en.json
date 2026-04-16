@@ -55,7 +55,33 @@
     "mapSectionDescriptionEn": "Madhupur is an upazila in Tangail District—known for pineapples, the Madhupur sal forest belt, and busy rural markets. Its administrative centre links towns, villages, and agricultural communities across forest and farmland.",
     "mapSectionDescriptionBn": "মধুপুর টাংগাইল জেলার একটি উপজেলা—আনারস, মধুপুরের শালবন অঞ্চল ও গ্রামীণ হাট-বাজারের জন্য পরিচিত। প্রশাসনিক কেন্দ্র শহর, গ্রাম ও কৃষি জনগোষ্ঠীকে বন ও কৃষিভূমির মধ্য দিয়ে যুক্ত রাখে।",
     "mapSectionOpenInMaps": "Open in Google Maps",
-    "mapSectionIframeTitle": "Map of Madhupur Upazila"
+    "mapSectionIframeTitle": "Map of Madhupur Upazila",
+    "weather": {
+      "eyebrow": "Weather",
+      "nearYou": "Near your location",
+      "fallbackArea": "Madhupur area (approx.)",
+      "loading": "Getting your location…",
+      "fetching": "Loading forecast…",
+      "error": "Could not load weather. Try again.",
+      "refresh": "Update",
+      "feelsLike": "Feels like {{temp}}°C",
+      "humidity": "Humidity",
+      "wind": "Wind",
+      "air": "Air quality",
+      "attribution": "Weather & air quality from Open-Meteo (free data). Icons reflect conditions at your coordinates.",
+      "conditions": {
+        "clear": "Clear sky",
+        "mainlyClear": "Mainly clear",
+        "partlyCloudy": "Partly cloudy",
+        "cloudy": "Overcast",
+        "fog": "Fog",
+        "drizzle": "Drizzle",
+        "rain": "Rain",
+        "snow": "Snow",
+        "thunder": "Thunderstorm",
+        "dust": "Hazy or dusty air"
+      }
+    }
   },
   "drawer": {
     "menu": "Menu",
