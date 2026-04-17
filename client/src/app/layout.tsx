@@ -1,5 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
+import {
+  Caveat,
+  Geist,
+  Geist_Mono,
+  Noto_Sans_Bengali,
+  Noto_Serif_Bengali,
+  Playfair_Display,
+} from "next/font/google";
 import { SetHtmlLang } from "@/components/layout/SetHtmlLang";
 import { ThemeColorMeta } from "@/components/theme/ThemeColorMeta";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -22,6 +29,27 @@ const notoBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
   display: "swap",
   weight: ["400", "500", "600", "700"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "600", "700"],
+});
+
+const notoSerifBengali = Noto_Serif_Bengali({
+  variable: "--font-noto-serif-bn",
+  subsets: ["bengali"],
+  display: "swap",
+  weight: ["400", "600", "700"],
 });
 
 function siteUrl(): URL {
@@ -80,7 +108,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} ${playfair.variable} ${caveat.variable} ${notoSerifBengali.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">

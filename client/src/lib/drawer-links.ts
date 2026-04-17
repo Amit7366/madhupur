@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Building2,
+  Factory,
   GraduationCap,
   HeartPulse,
   Images,
@@ -23,6 +24,7 @@ export const DRAWER_MORE_LINKS: DrawerMoreLink[] = [
   { segment: "education", icon: GraduationCap, labelKey: "pages.education.title" },
   { segment: "emergency", icon: Siren, labelKey: "pages.emergency.title" },
   { segment: "tourism", icon: Landmark, labelKey: "pages.tourism.title" },
+  { segment: "jobs", icon: Factory, labelKey: "pages.jobs.title" },
   { segment: "news", icon: Newspaper, labelKey: "pages.news.title" },
   { segment: "gallery", icon: Images, labelKey: "pages.gallery.title" },
   { segment: "about", icon: Info, labelKey: "pages.about.title" },

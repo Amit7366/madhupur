@@ -9,7 +9,8 @@
     "start": "node dist/server.js",
     "seed": "tsx src/scripts/seed-places.ts",
     "seed:blood": "tsx src/scripts/seed-blood-bank.ts",
-    "seed:tourism": "tsx src/scripts/seed-tourism.ts"
+    "seed:tourism": "tsx src/scripts/seed-tourism.ts",
+    "seed:jobs": "tsx src/scripts/seed-jobs.ts"
   },
   "dependencies": {
     "cloudinary": "^2.9.0",

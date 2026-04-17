@@ -36,6 +36,11 @@
   --font-sans: var(--font-geist-sans), var(--font-noto-bengali), ui-sans-serif,
     system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* Tourism / editorial overlays (set on <html> via next/font CSS variables). */
+  --font-tourism-display: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-tourism-script: var(--font-caveat), cursive;
+  --font-tourism-display-bn: var(--font-noto-serif-bn), var(--font-noto-bengali),
+    ui-serif, serif;
 }
 
 @layer base {
